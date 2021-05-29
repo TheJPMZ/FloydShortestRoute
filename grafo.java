@@ -1,5 +1,7 @@
 // Adjacency Matrix representation in Java https://www.programiz.com/dsa/graph-adjacency-matrix
 
+import javax.sound.midi.Soundbank;
+
 public class grafo {
     private int adjMatrix[][];
     private int intmatrix[][];
@@ -59,18 +61,33 @@ public class grafo {
                         continue;
                     }
                     int tempsum = adjMatrix[x][i] + adjMatrix[j][x];
-                    System.out.println("X:"+x+" I:"+i+" J:"+j+" "+tempsum+" Es menor a "+adjMatrix[j][i]+"?");
+                    //System.out.println("X:"+x+" I:"+i+" J:"+j+" "+tempsum+" Es menor a "+adjMatrix[j][i]+"?");
                     if (tempsum < adjMatrix[j][i]){
-                        System.out.println("Si");
+                        //System.out.println("Si");
                         adjMatrix[j][i] = tempsum;
                         intmatrix[j][i] = x;
                     }
-                    System.out.println("No");
+                    //System.out.println("No");
                 }
             }
         }
 
+
+
+    }
+
+    public void printboth(){
         StringBuilder s = new StringBuilder();
+        for (int i = 0; i < numVertices; i++) {
+            s.append(i + ": ");
+            for (int j :  adjMatrix[i]) {
+                s.append((j) + " ");
+            }
+            s.append("\n");
+        }
+        System.out.println(s);
+
+        s = new StringBuilder();
         for (int i = 0; i < numVertices; i++) {
             s.append(i + ": ");
             for (int j : intmatrix[i]) {
@@ -79,6 +96,24 @@ public class grafo {
             s.append("\n");
         }
         System.out.println(s);
-
     }
+
+    public void recorrido(int inicio,int destino){
+        int here = intmatrix[inicio][destino];
+        //System.out.println(intmatrix[inicio][destino]);
+        if (here != -1){
+            System.out.println("De "+inicio+" a " + here + " son " + adjMatrix[inicio][here]);
+            recorrido(here,destino);
+        } else {
+            System.out.printf("Ha llegado a su destino\n");
+        }
+    }
+
+    public void rutacorta(int inicio,int destino){
+        System.out.println("Los pasos a seguir son:");
+        recorrido(inicio, destino);
+        System.out.printf("Recorrido total: "+ adjMatrix[inicio][destino]);
+    }
+
+
 }

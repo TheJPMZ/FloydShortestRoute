@@ -29,6 +29,9 @@ public class main{
 
         g.floyd();
 
+        g.printboth();
+
+        g.rutacorta(0,2);
         /*
         int menumaster = menu.displaymenu();
 
