@@ -1,12 +1,13 @@
 // Adjacency Matrix representation in Java https://www.programiz.com/dsa/graph-adjacency-matrix
 
-import javax.sound.midi.Soundbank;
+import java.util.ArrayList;
 
 public class grafo {
     private int adjMatrix[][];
     private int intmatrix[][];
     private int numVertices;
-    private int inf = 99;
+    private int inf = 999;
+    private ArrayList<String> titles = new ArrayList<String>();
 
     // Initialize the matrix
     public grafo(int numVertices) {
@@ -14,20 +15,37 @@ public class grafo {
         adjMatrix = new int[numVertices][numVertices];
         for (int i = 0; i < numVertices; i++){
             for (int j = 0; j < numVertices; j++) {
-                adjMatrix[i][j] = 999;
+                adjMatrix[i][j] = inf;
             }
             adjMatrix[i][i] = 00;
         }
+        genintmatrix();
     }
 
     // Add edges
     public void addEdge(int i, int j, int road) {
+
         adjMatrix[i][j] = road;
     }
 
     // Remove edges
     public void removeEdge(int i, int j) {
+
         adjMatrix[i][j] = inf;
+    }
+
+    public void settitles(ArrayList<String> listanombres){
+        for (String punto:listanombres) {
+            this.titles.add(punto);
+        }
+    }
+
+    public boolean containstitles(String nombre){
+        return titles.contains(nombre);
+    }
+
+    public ArrayList<String> gettitles(){
+        return titles;
     }
 
     // Print the matrix
@@ -43,7 +61,7 @@ public class grafo {
         return s.toString();
     }
 
-    public void floyd () {
+    public void genintmatrix(){
         intmatrix = new int[numVertices][numVertices];
         for (int i = 0; i < numVertices; i++){
             for (int j = 0; j < numVertices; j++) {
@@ -51,8 +69,11 @@ public class grafo {
             }
             intmatrix[i][i] = -1;
         }
+    }
 
+    public void floyd() {
 
+        genintmatrix();
 
         for (int x = 0; x < numVertices; x++) {
             for (int i = 0; i < numVertices; i++) {
@@ -62,7 +83,7 @@ public class grafo {
                     }
                     int tempsum = adjMatrix[x][i] + adjMatrix[j][x];
                     //System.out.println("X:"+x+" I:"+i+" J:"+j+" "+tempsum+" Es menor a "+adjMatrix[j][i]+"?");
-                    if (tempsum < adjMatrix[j][i]){
+                    if (tempsum <= adjMatrix[j][i]){
                         //System.out.println("Si");
                         adjMatrix[j][i] = tempsum;
                         intmatrix[j][i] = x;
@@ -71,12 +92,19 @@ public class grafo {
                 }
             }
         }
-
-
-
+        
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < numVertices; j++) { 
+                if (adjMatrix[i][j] == inf){
+                    intmatrix[i][j] = inf;
+                }
+            }
+        }
+        
     }
 
     public void printboth(){
+
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < numVertices; i++) {
             s.append(i + ": ");
@@ -98,22 +126,63 @@ public class grafo {
         System.out.println(s);
     }
 
-    public void recorrido(int inicio,int destino){
+    private void recorrido(int inicio,int destino){
+
         int here = intmatrix[inicio][destino];
-        //System.out.println(intmatrix[inicio][destino]);
+
         if (here != -1){
-            System.out.println("De "+inicio+" a " + here + " son " + adjMatrix[inicio][here]);
+            System.out.println(">De "+titles.get(inicio)+" a " + titles.get(here) + " son " + adjMatrix[inicio][here] + "km");
             recorrido(here,destino);
-        } else {
-            System.out.printf("Ha llegado a su destino\n");
+        }   else {
+            //TODO Que hacer si no se puede llegar al destino
+            System.out.println("Ha llegado a su destino");
         }
     }
 
-    public void rutacorta(int inicio,int destino){
-        System.out.println("Los pasos a seguir son:");
-        recorrido(inicio, destino);
-        System.out.printf("Recorrido total: "+ adjMatrix[inicio][destino]);
+    public void rutacorta(String pinicio,String pdestino){
+
+        int inicio = titles.indexOf(pinicio);
+        int destino = titles.indexOf(pdestino);
+        
+        if (adjMatrix[inicio][destino] < inf){
+            System.out.println("Los pasos a seguir son:");
+            recorrido(inicio, destino);
+            System.out.println("Recorrido total: "+ adjMatrix[inicio][destino] + "km");
+        } else {
+            System.out.println("No hay ruta hacia el destino");
+        }
+
     }
 
+    public String getcenter(){
 
+        ArrayList<Integer> lista = new ArrayList<Integer>();
+
+        int menorglobal = inf;
+
+        for (int x = 0; x < numVertices; x++) {
+
+            int mayorlocal = mayorcolumna(x);
+            if (mayorlocal < menorglobal){
+                menorglobal = mayorlocal;
+            }
+
+            lista.add(mayorlocal);
+        }
+
+        int mayor= lista.indexOf(menorglobal);
+
+        return titles.get(mayor);
+    }
+
+    private int mayorcolumna(int x){
+        int mayorlocal = 0;
+        for (int i = 0; i < numVertices; i++) {
+            int here = adjMatrix[i][x];
+            if (here > mayorlocal){
+                mayorlocal = here;
+            }
+        }
+        return mayorlocal;
+    }
 }

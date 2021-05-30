@@ -2,25 +2,21 @@ import java.io.File;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
-import java.util.PriorityQueue;
 
 
 public class lectura {
-    /**
-     * Lee el achivo en la ruta especificada
-     * Este codigo esta basado en hojas de trabajo pasadas
-     * @return Lista que contiene los datos del archivo
-     */
-    public static ArrayList<String> leerdiccionario() {
+
+    public static ArrayList<String> leerarchivo() {
 
         Scanner scanner = new Scanner(System.in);
-        String linea = ""; //Temporal para cada linea del archivo
-        String ruta = ""; //Ruta del archivo
-        ArrayList<String> Lista = new ArrayList<String>(); //Temporal para incluir el archivo
+
+        String linea = "";
+        String ruta = "";
+        ArrayList<String> Lista = new ArrayList<String>();
 
         boolean loop = true;
         while (loop){
-            System.out.println("Ingrese el pathname del diccionario");
+            System.out.println("Ingrese el pathname del documento");
             ruta = scanner.nextLine();
             File file = new File(ruta);
             try {
@@ -32,6 +28,39 @@ public class lectura {
             } catch (Exception e) { System.out.println("Ha ocurrido un error al leer el archivo, intente otra vez"); }
         }
         return Lista;
+    }
+
+    public static grafo generargrafo(ArrayList<String> lista){
+
+        ArrayList<String> nombres = new ArrayList<String>();
+
+        for (String LineaString:lista) {
+
+            LineaString.toUpperCase();
+            String[] linea = LineaString.split(" ");
+
+            for (int x = 0; x < 2; x++) {
+                if (!nombres.contains(linea[x])){
+                    nombres.add(linea[x]);
+                }
+            }
+        }
+
+        grafo g = new grafo(nombres.size());
+        g.settitles(nombres);
+
+        for (String LineaString:lista) {
+
+            LineaString.toUpperCase();
+            String[] linea = LineaString.split(" ");
+
+            int recorrido = Integer.parseInt(linea[2]);
+
+            g.addEdge(nombres.indexOf(linea[0]), nombres.indexOf(linea[1]),recorrido);
+
+        }
+
+        return g;
     }
 }
 
