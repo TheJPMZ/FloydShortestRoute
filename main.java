@@ -1,5 +1,3 @@
-import java.lang.reflect.Array;
-
 /**
  * Universidad del Valle de Guatemala
  * Algoritmos y estructuras de datos
@@ -13,19 +11,22 @@ import java.lang.reflect.Array;
 
 import java.util.ArrayList;
 public class main{
-
-
+    /**
+     * Main
+     * @param args
+     */
     public static void main(String[] args){
 
-        grafo g = lectura.generargrafo(lectura.leerarchivo());
+        grafo g = lectura.generargrafo(lectura.leerarchivo()); //Se le el archivo en un grafo
 
-        g.floyd();
+        g.floyd(); //Se llama al algoritmo de floyd
 
         g.printboth();
-        do {
-            int menumaster = menu.displaymenu();
 
-            switch (menumaster) {
+        do {
+            int menumaster = menu.displaymenu(); //Se llama al menu
+
+            switch (menumaster) { //Menu
                 case 1:
                     ArrayList<String> Lista1 = menu.dosciudadesmenu(g);
                     g.rutacorta(Lista1.get(0),Lista1.get(1));

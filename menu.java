@@ -2,7 +2,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class menu {
-
+    /**
+     * Muestra el menu principal
+     * Contiene programacion defensiva
+     * @return La opcion escogida
+     */
     public static int displaymenu(){
 
         int option = 0;
@@ -23,6 +27,11 @@ public class menu {
         return option;
     }
 
+    /**
+     * Muestra el menu de modificar
+     * Contiene programacion defensiva
+     * @return La opcion escogida
+     */
     public static int modificarmenu(){
         int option = 0;
 
@@ -40,6 +49,12 @@ public class menu {
         return option;
     }
 
+    /**
+     * Menu para escribir dos cuidades primero el origen y luego el destino
+     * Contiene programacion defensiva
+     * @param g Obtiene el grafo como parametro
+     * @return Una lista con ambas ciudades
+     */
     public static ArrayList<String> dosciudadesmenu(grafo g){
 
         ArrayList<String> lista =  new ArrayList<String>();
@@ -71,6 +86,11 @@ public class menu {
         return lista;
     }
 
+    /**
+     * Obtiene una distancia
+     * Contiene programacion defensiva
+     * @return la distancia
+     */
     public static int menurecorrido(){
         int recorrido = 0;
 

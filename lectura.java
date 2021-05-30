@@ -5,7 +5,10 @@ import java.util.*;
 
 
 public class lectura {
-
+    /**
+     * Lee el archivo guategrafo y lo regresa en una Arraylist
+     * @return Arraylist con lineas del archivo
+     */
     public static ArrayList<String> leerarchivo() {
 
         Scanner scanner = new Scanner(System.in);
@@ -30,6 +33,11 @@ public class lectura {
         return Lista;
     }
 
+    /**
+     * Genera un grafo en base de una arraylist
+     * @param lista arraylist con los valores del grafo
+     * @return El grafo
+     */
     public static grafo generargrafo(ArrayList<String> lista){
 
         ArrayList<String> nombres = new ArrayList<String>();
