@@ -9,7 +9,8 @@ public class grafo {
     private int inf = 999;
     private ArrayList<String> titles = new ArrayList<String>();
 
-    // Initialize the matrix
+    //TODO funcion de agregar nodos al grafo
+
     public grafo(int numVertices) {
         this.numVertices = numVertices;
         adjMatrix = new int[numVertices][numVertices];
@@ -49,11 +50,11 @@ public class grafo {
     }
 
     // Print the matrix
-    public String toString() {
+    public String toString(int matriz[][]) {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < numVertices; i++) {
             s.append(i + ": ");
-            for (int j : adjMatrix[i]) {
+            for (int j : matriz[i]) {
                 s.append((j) + " ");
             }
             s.append("\n");
@@ -105,25 +106,10 @@ public class grafo {
 
     public void printboth(){
 
-        StringBuilder s = new StringBuilder();
-        for (int i = 0; i < numVertices; i++) {
-            s.append(i + ": ");
-            for (int j :  adjMatrix[i]) {
-                s.append((j) + " ");
-            }
-            s.append("\n");
-        }
-        System.out.println(s);
+        System.out.println(toString(adjMatrix));
 
-        s = new StringBuilder();
-        for (int i = 0; i < numVertices; i++) {
-            s.append(i + ": ");
-            for (int j : intmatrix[i]) {
-                s.append((j) + " ");
-            }
-            s.append("\n");
-        }
-        System.out.println(s);
+        System.out.println(toString(intmatrix));
+
     }
 
     private void recorrido(int inicio,int destino){
@@ -134,7 +120,6 @@ public class grafo {
             System.out.println(">De "+titles.get(inicio)+" a " + titles.get(here) + " son " + adjMatrix[inicio][here] + "km");
             recorrido(here,destino);
         }   else {
-            //TODO Que hacer si no se puede llegar al destino
             System.out.println("Ha llegado a su destino");
         }
     }
